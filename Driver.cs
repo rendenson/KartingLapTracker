@@ -12,7 +12,7 @@ class Driver
             throw new ArgumentException("Driver name cannot be empty.", nameof(name));
         }
 
-        Name = name;
+        Name = name.Trim();
     }
 
     public void AddLapTime(double lapTime)

@@ -11,14 +11,15 @@ class Program
         {
             Console.WriteLine("\n= Karting Lap Tracker = ");
             Console.WriteLine("1. Add driver");
-            Console.WriteLine("2. Show all drivers");
-            Console.WriteLine("3. Exit");
+            Console.WriteLine("2. Add lap time");
+            Console.WriteLine("3. Show all drivers");
+            Console.WriteLine("4. Exit");
             Console.Write("Choose an option: "); 
 
             string? input = Console.ReadLine();
 
             // Validation cycle
-            while(input != "1" && input != "2" && input != "3")
+            while(input != "1" && input != "2" && input != "3" && input != "4")
             {
                 Console.Write("Unknown option, please try again: ");
                 input = Console.ReadLine();
@@ -43,6 +44,50 @@ class Program
                     break;
 
                 case "2":
+                    if (drivers.Count == 0)
+                    {
+                        Console.WriteLine("Add a driver first.");
+                        break;
+                    }
+
+                    Console.Write("Enter a driver's name: ");
+                    string? driverName = Console.ReadLine();
+                    driverName = driverName?.Trim();
+
+                    Driver? selected = null;
+
+                    foreach (Driver driver in drivers)
+                    {
+                        if (string.Equals(driver.Name, driverName, StringComparison.OrdinalIgnoreCase))
+                        {
+                            selected = driver;
+                            break;
+                        }
+                    }    
+
+                    if (selected == null)
+                    {
+                        Console.WriteLine("A driver is not found, please try again.");
+                        break;
+                    }         
+
+                    Console.Write("Enter a lap time: ");
+                    string? driverLap = Console.ReadLine();
+
+                    if (double.TryParse(driverLap, out double value))
+                    {
+                        if (value > 0)
+                        {
+                            selected.AddLapTime(value);
+                            Console.WriteLine($"Laptime {value:F3} for driver '{selected.Name}' added.");
+                            break;
+                        }
+                    }
+
+                    Console.WriteLine("Incorrect lap time, please try again.");
+
+                    break;
+                case "3":
                     Console.WriteLine("The list of all drivers:");
                     
                     if (drivers.Count == 0)
@@ -72,7 +117,7 @@ class Program
                     Console.ReadLine();
                     break;
 
-                case "3":
+                case "4":
                     Console.WriteLine("Successfully exited.");
                     return;
             }
