@@ -1,32 +1,38 @@
 class Driver
 {
+    private readonly List<double> _lapTimes = new List<double>();
+    public IReadOnlyList<double> LapTimes => _lapTimes;
     public string Name { get; }
-    public List<double> LapTimes { get; }
+    
 
     public Driver(string name)
     {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            throw new ArgumentException("Driver name cannot be empty.", nameof(name));
+        }
+
         Name = name;
-        LapTimes = new List<double>();
     }
 
     public void AddLapTime(double lapTime)
     {
         if (lapTime <= 0)
         {
-            throw new ArgumentException("Lap time must be greater than zero.");
+            throw new ArgumentOutOfRangeException(nameof(lapTime), "Lap time must be greater than zero.");
         }
 
-        LapTimes.Add(lapTime);
+        _lapTimes.Add(lapTime);
     }
 
-    public double GetBestLapTime()
+    public double? GetBestLapTime()
     {
-        return LapTimes.Count == 0 ? 0 : LapTimes.Min();
+        return _lapTimes.Count == 0 ? null : _lapTimes.Min();
     }
 
-    public double GetAverageLapTime()
+    public double? GetAverageLapTime()
     {
-        return LapTimes.Count == 0 ? 0 : LapTimes.Average();
+        return _lapTimes.Count == 0 ? null : _lapTimes.Average();
     }
 }
 
