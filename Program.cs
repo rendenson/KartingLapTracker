@@ -5,7 +5,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<Driver> drivers = new List<Driver>();
+        List<Driver> drivers = DriverStorage.Load();
 
         while (true)
         {
@@ -118,7 +118,8 @@ class Program
                     break;
 
                 case "4":
-                    Console.WriteLine("Successfully exited.");
+                    DriverStorage.Save(drivers);
+                    Console.WriteLine("Successfully saved and exited.");
                     return;
             }
         }
