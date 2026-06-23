@@ -71,6 +71,22 @@ class Program
             }
         }
 
+        Console.WriteLine("\n = Summary = ");
+
+        if (drivers.Any())
+        {
+            int totalDrivers = drivers.Count;
+            int totalLaps = drivers.Sum(d => d.LapTimes.Count);
+            Console.WriteLine($"Total: {totalDrivers} drivers, {totalLaps} laps.");
+
+            var driversWithLaps = drivers.Where(d => d.LapTimes.Count > 0).ToList();
+            if (driversWithLaps.Any())
+            {
+                var fastest = driversWithLaps.MinBy(d => d.LapTimes.Min());
+                Console.WriteLine($"Fastest driver: {fastest!.Name} ({fastest.LapTimes.Min():F3} seconds)");
+            }
+        }
+
         Console.Write("\nPress enter to continue...");
         Console.ReadLine();
     }
@@ -102,7 +118,7 @@ class Program
 
         Console.WriteLine("\nThe list of all drivers:");
 
-        for(int i = 0; i < drivers.Count; i++)
+        for (int i = 0; i < drivers.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {drivers[i].Name}");
         }
@@ -117,9 +133,9 @@ class Program
         {
             if (number >= 1 && number <= drivers.Count)
             {
-                selected = drivers[number-1];
+                selected = drivers[number - 1];
             }
-        } 
+        }
 
         if (selected == null)
         {
