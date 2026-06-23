@@ -5,6 +5,9 @@ using System.Collections.Generic;
 static class DriverStorage
 {
     private const string FilePath = "drivers.json"; 
+
+    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+
     public static void Save(List<Driver> drivers)
     {
         List<DriverData> data = new();
@@ -16,7 +19,7 @@ static class DriverStorage
             data.Add(driverData);
         }
 
-        string json = JsonSerializer.Serialize(data, new JsonSerializerOptions {WriteIndented = true});
+        string json = JsonSerializer.Serialize(data, JsonOptions);
         File.WriteAllText(FilePath, json);
     }
 
