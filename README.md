@@ -5,10 +5,12 @@ A console application for tracking karting drivers and their lap times. Drivers 
 ## Features
 
 - Add drivers with input validation (no empty or whitespace-only names)
-- Record lap times for a driver, with validation against invalid or non-positive values
+- Record lap times for a driver, with validation against non-numeric or non-positive values
+- Select a driver from a numbered list when adding lap times
 - View all drivers with their best and average lap times
-- Case-insensitive driver lookup when adding lap times
+- A summary showing the total number of drivers, total laps, and the fastest driver
 - Automatic saving and loading of data via a JSON file
+- Robust loading that recovers gracefully from a missing or corrupted data file
 
 ## Technologies
 
@@ -33,11 +35,11 @@ Driver data is stored in `drivers.json`, which is created automatically in the p
 When the application starts, it shows a menu:
 
 1. **Add driver** — enter a driver's name.
-2. **Add lap time** — choose an existing driver by name and enter a lap time in seconds (e.g. `52.249`).
-3. **Show all drivers** — lists every driver with their best and average lap time.
+2. **Add lap time** — choose a driver from the numbered list and enter a lap time in seconds (e.g. `52.249`).
+3. **Show all drivers** — lists every driver with their best and average lap time, followed by a summary.
 4. **Exit** — saves all data to `drivers.json` and closes the application.
 
-Invalid menu options and malformed input (empty names, non-numeric or non-positive lap times) are handled gracefully without crashing.
+Invalid menu options and malformed input (empty names, non-numeric or non-positive lap times, out-of-range driver numbers) are handled gracefully without crashing. Lap times are parsed using `CultureInfo.InvariantCulture`, so a dot is always used as the decimal separator regardless of the system locale.
 
 ## Project structure
 
@@ -50,11 +52,13 @@ Invalid menu options and malformed input (empty names, non-numeric or non-positi
 
 - Encapsulation: hiding the internal list and exposing it as an `IReadOnlyList`
 - Separating the domain model (`Driver`) from the serialization model (`DriverData`) using a DTO
-- JSON serialization and safe file handling, including the case where the data file does not exist
+- JSON serialization and safe file handling, including missing or corrupted data files
 - Input validation and keeping validation rules consistent across the application
+- Using LINQ (`Where`, `Sum`, `MinBy`) to compute summary statistics
+- Locale-independent number parsing with `CultureInfo.InvariantCulture`
 
 ## Future plans
 
 - Add the ability to add multiple drivers in a row without returning to the menu
-- Show an indexed list of drivers when selecting one
-- Use `CultureInfo.InvariantCulture` for fully locale-independent number parsing
+- Prevent duplicate driver names
+- Allow editing or removing drivers and lap times
