@@ -1,6 +1,6 @@
 class Driver
 {
-    private readonly List<double> _lapTimes = new List<double>();
+    private readonly List<double> _lapTimes = new();
     public IReadOnlyList<double> LapTimes => _lapTimes;
     public string Name { get; }
     

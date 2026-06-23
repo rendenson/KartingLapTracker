@@ -38,7 +38,7 @@ class Program
                         break;
                     }
 
-                    Driver newDriver = new Driver(inputName);
+                    Driver newDriver = new(inputName);
 
                     drivers.Add(newDriver);
                     Console.WriteLine($"Driver '{inputName}' added.");
