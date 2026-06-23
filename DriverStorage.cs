@@ -27,9 +27,18 @@ static class DriverStorage
             return new List<Driver>();
         }
 
-        string json = File.ReadAllText(FilePath);
-        List<DriverData>? data = JsonSerializer.Deserialize<List<DriverData>>(json);
+        List<DriverData>? data;
 
+        try
+        {
+            string json = File.ReadAllText(FilePath);
+            data = JsonSerializer.Deserialize<List<DriverData>>(json);
+        }
+        catch(JsonException)
+        {
+            data = null;
+        }
+        
         if (data == null)
         {
             return new List<Driver>();
@@ -45,7 +54,7 @@ static class DriverStorage
             }
             Driver driver = new Driver(driverData.Name);
 
-            foreach(double lapTime in driverData.LapTimes)
+            foreach(double lapTime in driverData.LapTimes ?? new List<double>())
             {
                 driver.AddLapTime(lapTime);
             }
