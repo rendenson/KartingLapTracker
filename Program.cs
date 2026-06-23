@@ -44,7 +44,7 @@ class Program
 
     static void ShowDrivers(List<Driver> drivers)
     {
-        Console.WriteLine("The list of all drivers:");
+        Console.WriteLine("\nThe list of all drivers and their records:");
 
         if (drivers.Count == 0)
         {
@@ -69,13 +69,13 @@ class Program
             }
         }
 
-        Console.WriteLine("\nPress enter to continue...");
+        Console.Write("\nPress enter to continue...");
         Console.ReadLine();
     }
 
     static void AddDriver(List<Driver> drivers)
     {
-        Console.Write("Name a driver: ");
+        Console.Write("\nName a driver: ");
         string? inputName = Console.ReadLine();
 
         if (string.IsNullOrWhiteSpace(inputName))
@@ -98,24 +98,30 @@ class Program
             return;
         }
 
-        Console.Write("Enter a driver's name: ");
-        string? driverName = Console.ReadLine();
-        driverName = driverName?.Trim();
+        Console.WriteLine("\nThe list of all drivers:");
+
+        for(int i = 0; i < drivers.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {drivers[i].Name}");
+        }
+
+        Console.Write("\nEnter a driver's number: ");
+        string? input = Console.ReadLine();
+        input = input?.Trim();
 
         Driver? selected = null;
 
-        foreach (Driver driver in drivers)
+        if (int.TryParse(input, out int number))
         {
-            if (string.Equals(driver.Name, driverName, StringComparison.OrdinalIgnoreCase))
+            if (number >= 1 && number <= drivers.Count)
             {
-                selected = driver;
-                break;
+                selected = drivers[number-1];
             }
-        }
+        } 
 
         if (selected == null)
         {
-            Console.WriteLine("A driver is not found, please try again.");
+            Console.WriteLine("Incorrect input, please try again.");
             return;
         }
 
@@ -142,6 +148,6 @@ class Program
         Console.WriteLine("2. Add lap time");
         Console.WriteLine("3. Show all drivers");
         Console.WriteLine("4. Exit");
-        Console.Write("Choose an option: ");
+        Console.Write("\nChoose an option: ");
     }
 }
