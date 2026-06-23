@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 class Program
 {
@@ -19,7 +20,7 @@ class Program
             string? input = Console.ReadLine();
 
             // Validation cycle
-            while(input != "1" && input != "2" && input != "3" && input != "4")
+            while(input is not ("1" or "2" or "3" or "4"))
             {
                 Console.Write("Unknown option, please try again: ");
                 input = Console.ReadLine();
@@ -74,7 +75,7 @@ class Program
                     Console.Write("Enter a lap time: ");
                     string? driverLap = Console.ReadLine();
 
-                    if (double.TryParse(driverLap, out double value))
+                    if (double.TryParse(driverLap, NumberStyles.Float, CultureInfo.InvariantCulture, out double value))
                     {
                         if (value > 0)
                         {
