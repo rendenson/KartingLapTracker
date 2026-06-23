@@ -13,12 +13,14 @@ class Program
             ShowMenu();
 
             string? input = Console.ReadLine();
+            input = input?.Trim();
 
             // Validation cycle
             while (input is not ("1" or "2" or "3" or "4"))
             {
                 Console.Write("Unknown option, please try again: ");
                 input = Console.ReadLine();
+                input = input?.Trim();
             }
 
             switch (input)
