@@ -1,3 +1,4 @@
+namespace KartingLapTracker;
 class Driver
 {
     private readonly List<double> _lapTimes = new();

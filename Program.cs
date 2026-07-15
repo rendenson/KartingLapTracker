@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
+namespace KartingLapTracker;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
         List<Driver> drivers = DriverStorage.Load();
 

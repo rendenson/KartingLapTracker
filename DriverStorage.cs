@@ -1,10 +1,9 @@
 using System.Text.Json;
-using System.IO;
-using System.Collections.Generic;
-
+namespace KartingLapTracker;
 static class DriverStorage
 {
-    private const string FilePath = "drivers.json"; 
+    private static readonly string FilePath = 
+        Path.Combine(AppContext.BaseDirectory, "drivers.json");
 
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
 

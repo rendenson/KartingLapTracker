@@ -1,3 +1,4 @@
+namespace KartingLapTracker;
 class DriverData
 {
     public string? Name { get; set; }
